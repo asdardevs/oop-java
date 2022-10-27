@@ -1,0 +1,230 @@
+OOP
+
+aplikasi dimodelkan sebagai interaksi antar object yang mengirimkan
+pesan (memanggil method) ke object lain.
+
+Object menyimpan informasi/state (atribut) dan juga operasi/fungsi (method).
+
+Atribut menyimpan informasi seperti nama, umur, tanggal lahir, waktu dan lain
+sebagainya.
+
+Method merupakan kode program untuk melakukan tugas atau fungsi tertentu misalnya
+hitungSubTotal, hitungTotal, hitungPajak dan lain sebagainya.
+
+Class merupakan tipe data yang mendefinisikan atribut dan method apa saja yang
+ada disuatu object.
+
+Class vs. Object
+
+Manusia - class
+Hewan - class
+Kendaraan - class
+
+Budi, Susi - object dari class Manusia
+Meong, Mopi - object dari class Hewan
+RangeRover, MiniCooper - object dari class Kendaraan
+
+Class merupakan cetak biru/blueprint sedangkan object adalah perwujudan/instance
+dari class.
+
+Seluruh object dari class yang sama misalnya Manusia, memiliki atribut dan
+method yang sama.
+
+Contoh:
+
+class Manusia {
+    // atribut
+    private final String nama;
+    private final String jenisKelamin;
+    private int umur;
+
+    // constructor (method yang digunakan untuk meng-instantiate object baru)
+    public Manusia(String nama, String jenisKelamin, int umur) {
+        this.nama = nama;
+        this.jenisKelamin = jenisKelamin;
+        this.umur = umur;
+    }
+
+    // default contructor
+    public Manusia() {
+        this.nama = "";
+        this.jenisKelamin = "";
+        this.umur = 0;
+    }
+
+    // method (getter/aksesor untuk mengakses atribut)
+    public String getNama() { return nama; }
+
+    public String getJenisKelamin() { return jenisKelamin; }
+
+    public int getUmur() { return umur; }
+
+    // method (setter/mutator untuk mengubah atribut)
+    public void setUmur(int umur) {
+        if (umur < 0)
+            throw new IllegalArgumentException("Umur tidak boleh negatif");
+        else
+            this.umur = umur;
+    }
+
+    public int ulangTahun() {
+        setUmur(getUmur() + 1);
+        return getUmur();
+    }
+
+    public void sayHello(Manusia orang) {
+        System.out.println(this.getNama() + ": Hello, " + orang.getNama());
+    }
+}
+
+// deklarasi object budi & susi dengan tipe class Manusia
+Manusia budi, susi;
+
+// instantiate/buat object budi & susi dengan state tertentu
+budi = new Manusia("Budi", "pria", 25);
+susi = new Manusia("Susi", "wanita", 20);
+
+budi.sayHello(susi);
+
+
+## konsep utama oop
+
+1. encapsulation
+    membungkus data dan fungsi menjadi satu unit dengan tujuan menyembunyikan
+    kompleksitas/detail implementasi (class & object). interaksi terhadap object
+    hanya dapat dilakukan melalui antar muka (interface) yang dipublikasi
+    (method public). Manfaatnya adalah meningkatkan abstraksi sehingga lebih
+    mudah dipahami, menghasilkan design yang loosely coupled (object yang
+    memanggil method object lain tidak bergantung pada detail implementasi
+    dari class/object tersebut), sehingga implementasi bisa diubah2 tanpa
+    mengharuskan code user berubah.
+
+2. inheritance
+    class baru dapat dibangun dengan mewarisi atribut dan method dari class
+    dasar (parent/superclass). dengan menggunakan inheritance, dapat dibentuk
+    hierarki tipe data. Tujuan dari inheritance adalah meningkatkan konsistensi
+    class/object dan menggunakan kembali code yang sudah ada sebelumnya (code
+    reuse) dan memungkinkan user untuk melakukan polymorphism (konsep ke 3).
+
+3. polymorphism
+    object dari hirerarki inheritance yang sama dapat diperlukan sebagai object
+    dari superclass atau bahkan subclass yang segaris. Misalnya class Kucing dan
+    Tikus adalah turunan dari class Hewan. Maka object dari class Kucing bisa
+    dianggap/diperlakukan sebagai object dari class Hewan juga.
+
+    Manfaat polymorphism adalah kita bisa membuat method yang dideklarasikan
+    dengan tipe data superclass tetapi pada saat penggunaan parameter yang
+    dikirim/dihasilkan ada tipe dari subclass-nya.
+
+    Misalnya
+
+    public void memelihara(Hewan peliharaan) {...}
+
+    dapat dipanggil dengan
+    a.memelihara(new Kucing("Snowbell"));
+    a.memelihara(new Tikus("Stuart"));
+
+
+## access modifier
+
+Access modifier menentukan hak akses object lain terhadap atribut/method yang
+ada di dalam object tertentu.
+
+Pada Java access modifier dibagi menjadi:
+                    package class   subclass    world
+    private         x       v       x           x
+    public          v       v       v           v
+    protected       v       v       v           x
+
+atribut/method private hanya dapat diakses oleh object dari class yang sama
+(misalnya sesama object class Manusia).
+
+atribut/method public bisa diakses oleh siapa saja
+
+atribut/method protected membatasi akses ke package, class, subclass kecuali
+class dari package lain (world)
+
+
+## scope dan namespace
+
+scope merupakan cakupan code dimana variable/object yang dideklarasi dianggap
+masih aktif/dikenal.
+
+scope yang paling umum di Java adalah class. Seluruh variable atau fungsi
+harus berada di dalam class (disebut atribut dan method).
+
+Pada contoh class Manusia di atas, atribute nama dikenal diseluruh method yang
+ada di dalam class Manusia.
+
+Scope berikutnya adalah method, contohnya method setUmur di class Manusia
+parameter umur hanya di kenal di method tersebut.
+
+Scope berikutnya adalah block code, biasanya di dalam statement if/for/while/switch.
+
+Contoh:
+    if (n % 2 == 0 && n % 3 == 0) {
+        String keterangan = "kelipatan 2 dan 3";
+    }
+
+String keterangan hanya dapat digunakan pada block code if jika kondisi benar.
+
+Sedangkan package adalah namespace biasanya untuk mengelompokkan beberapa class
+menjadi satu kumpulan misalnya package java.util berisikan class-class utility
+seperti Scanner, List, Arrays dan lainnya.
+
+## Tipe data
+
+Tipe data merupakan susunan logis data yang dapat diolah pada aplikasi. Untuk
+dapat melakukan proses terhadap object, komputer harus mengetahui tipe datanya.
+
+Misalnya untuk menampung bilangan bulat di Java disediakan tipe data int/long.
+Sedangkan untuk bilangan desimal dapat digunakan tipe data float/double.
+Class Manusia adalah tipe data yang dibentuk sendiri oleh programmer dengan
+menggunakan tipe data lainnya (terdiri dari String nama, String jenisKelamin
+dan int umur).
+
+Java membedakan tipe data menjadi dua kategori:
+1. Tipe data primitif
+2. Tipe data non-primitif
+
+Tipe data primitif terdiri dari:
+    byte
+    short
+    int
+    long
+    float
+    double
+    boolean
+    char
+
+Tipe data non-primitif:
+    Byte
+    Short
+    Integer
+    Long
+    Float
+    Double
+    Boolean
+    Char
+    String
+    [] (array)
+    Class
+
+Tipe data primitif vs. non-primitif
+
+Tipe data primitif merupakan variable biasa sedangkan tipe data non-primitif
+adalah object/instance dari class.
+
+Perbedaan utama adalah variable biasa tidak memiliki method sedangkan tipe data
+non-primitif adalah object dan (boleh) memiliki method.
+
+Misalnya Integer.valueOf("5") mengubah String "5" menjadi Integer 5.
+
+Perbedaan lain adalah, nilai null hanya bisa ditampung pada tipe data non-primitif
+(object).
+
+Misalnya:
+
+int a = null; --> compile error
+Integer a = null; --> valid
+int a[] = null; --> valid karena array adalah tipe data non-primitif
